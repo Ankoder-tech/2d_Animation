@@ -3,6 +3,8 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 var c=canvas.getContext('2d');
 
+
+
 function Circle(x,y,dx,dy,radius) {
 
         this.x = x;
@@ -17,6 +19,7 @@ function Circle(x,y,dx,dy,radius) {
         c.arc(this.x,this.y,this.radius,0,Math.PI*2,false);
         c.strokeStyle='blue';
         c.stroke();
+        c.fill();
 
     };
     this.update=function(){
@@ -38,10 +41,11 @@ function Circle(x,y,dx,dy,radius) {
 
 var circleArray=[];
 for(var i=0;i<100;i++){
-    var x=Math.random()*innerWidth;
-   var dx=(Math.random()-0.5)*10;
-   var y=Math.random()*innerHeight;
-   var dy=(Math.random()-0.5)*10;
+    var x=Math.random()*(innerWidth - radius*2)+radius;
+    var y=Math.random()*(innerHeight - radius*2)+radius;
+   var dx=(Math.random()-0.5)*8;
+   
+   var dy=(Math.random()-0.5)*8;
    var radius=30;   
    
     circleArray.push(new Circle(x,y,dx,dy,radius));
