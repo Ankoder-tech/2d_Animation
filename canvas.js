@@ -25,6 +25,10 @@ var colorArray = [
 
 ]
 
+var textInput = document.getElementById('textInput');
+var targetPositions = [];
+
+
 window.addEventListener('mousemove',function(event){
     mouse.x=event.x;
     mouse.y=event.y;
@@ -48,6 +52,8 @@ function Circle(x,y,dx,dy,radius) {
         this.radius=radius;
         this.minradius=radius;
         this.color=colorArray[Math.floor(Math.random()*colorArray.length)];
+        this.targetX=null;
+        this.targetY=null;
     
     this.draw = function(){
         c.beginPath();
@@ -58,26 +64,38 @@ function Circle(x,y,dx,dy,radius) {
 
     };
     this.update=function(){
-        if(this.x+this.radius>innerWidth||this.x-this.radius<0){
-             this.dx=-this.dx;
-        }
+        if(this.targetX!=null){
+            this.x+=(this.targetX-this.x)*0.08;
+            this.y+=(this.targetY-this.y)*0.08;
 
-        if(this.y+this.radius>innerHeight||this.y-this.radius<0){
-            this.dy=-this.dy;
-        }
-
-
-        this.x+=this.dx;
-        this.y+=this.dy;
-        if(mouse.x-this.x<50 && mouse.x-this.x>-50 && 
-            mouse.y-this.y<50 && mouse.y-this.y>-50){
-
-            if(this.radius<maxradius){
-                this.radius+=1;
+            if(this.radius>2){
+                this.radius-=0.1;
             }
         }
-        else if(this.radius>this.minradius){
-            this.radius-=1;
+
+        
+        else{
+            if(this.x+this.radius>innerWidth||this.x-this.radius<0){
+             this.dx=-this.dx;
+            }
+
+            if(this.y+this.radius>innerHeight||this.y-this.radius<0){
+              this.dy=-this.dy;
+            }
+
+
+           this.x+=this.dx;
+           this.y+=this.dy;
+           if(mouse.x-this.x<50 && mouse.x-this.x>-50 && 
+            mouse.y-this.y<50 && mouse.y-this.y>-50){
+
+              if(this.radius<maxradius){
+                this.radius+=1;
+              }
+            }
+            else if(this.radius>this.minradius){
+               this.radius-=1;
+            }
         }
         this.draw();
 
