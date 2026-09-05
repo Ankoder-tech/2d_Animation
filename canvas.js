@@ -123,6 +123,96 @@ function init(){
 
 }
 
+function createTextTargets(text){
+    targetPositions=[];
+
+    var textCanvas = document.createElement('canvas');
+    var textContext = textCanvas.getContext('2d');
+
+    textContext.clearRect(
+        0,
+        0,
+        textCanvas.width,
+        textCanvas.height
+    );
+    var fontSize = Math.min(
+        canvas.width,
+        canvas.height
+    ) * 0.5;
+
+    textContext.font ='bold ' + fontSize + 'px Arial';
+    textContext.textAlign = 'center';
+
+    textContext.textBaseline = 'middle';
+
+    textContext.fillText(text,canvas.width / 2,canvas.height / 2);
+
+    var imageData = textContext.getImageData(0,0,canvas.width,canvas.height);
+    var data = imageData.data;
+     var gap = 6;
+
+     for (var y = 0;y < canvas.height;y += gap) {
+
+        for (var x = 0;x < canvas.width;x += gap) {
+            var index =(y * canvas.width + x) * 4;
+            var alpha = data[index + 3];
+
+            if (alpha > 128) {
+                targetPositions.push({x: x,y: y});
+
+            }
+
+        }
+
+    }
+    for (var i = 0;i < circleArray.length;i++) {
+
+        if (targetPositions[i]) {
+
+            circleArray[i].targetX =targetPositions[i].x;
+            circleArray[i].targetY =targetPositions[i].y;
+
+        }
+
+        else {
+
+            circleArray[i].targetX = null;
+            circleArray[i].targetY = null;
+
+        }
+
+    }
+
+
+
+}
+
+textInput.addEventListener('input',function() {
+
+        var text = textInput.value;
+        if (text.length > 0) {
+            createTextTargets(text);
+
+        }
+
+        else {
+
+            for (var i = 0;i < circleArray.length;i++) {
+
+                circleArray[i].targetX = null;
+                circleArray[i].targetY = null;
+
+                circleArray[i].radius =circleArray[i].minradius;
+
+            }
+
+        }
+
+    }
+);
+
+
+
 
 
 
