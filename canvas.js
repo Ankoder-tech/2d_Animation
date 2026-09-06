@@ -8,7 +8,7 @@ var mouse={
     x:undefined,
     y:undefined
 }
-var maxradius=60;
+var maxradius=8;
 //var minradius=10;
 
 var colorArray = [
@@ -99,7 +99,7 @@ function Circle(x,y,dx,dy,radius) {
         }
         this.draw();
 
-    }
+    };
 } 
 
 
@@ -108,7 +108,7 @@ var circleArray=[];
 function init(){
     circleArray=[];
     
-  for(var i=0;i<900;i++){
+  for(var i=0;i<2000;i++){
     var radius=Math.random()*3+1;  
     var x=Math.random()*(innerWidth - radius*2)+radius;
     var y=Math.random()*(innerHeight - radius*2)+radius;
@@ -128,24 +128,19 @@ function createTextTargets(text){
 
     var textCanvas = document.createElement('canvas');
     var textContext = textCanvas.getContext('2d');
+    textCanvas.width = canvas.width;
+    textCanvas.height = canvas.height;
 
-    textContext.clearRect(
-        0,
-        0,
-        textCanvas.width,
-        textCanvas.height
-    );
-    var fontSize = Math.min(
-        canvas.width,
-        canvas.height
-    ) * 0.5;
+    textContext.clearRect(0,0,textCanvas.width,textCanvas.height);
+
+    var fontSize = Math.min(canvas.width,canvas.height) * 0.5;
 
     textContext.font ='bold ' + fontSize + 'px Arial';
     textContext.textAlign = 'center';
 
     textContext.textBaseline = 'middle';
 
-    textContext.fillText(text,canvas.width / 2,canvas.height / 2);
+    textContext.fillText(text,canvas.width/2,canvas.height/2);
 
     var imageData = textContext.getImageData(0,0,canvas.width,canvas.height);
     var data = imageData.data;

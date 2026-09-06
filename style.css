@@ -19,3 +19,22 @@ canvas {
     background: #07111f;
     z-index: 0;
 }
+#textInput {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            z-index: 10;
+
+            width: 250px;
+            padding: 12px 20px;
+
+            font-size: 20px;
+            text-align: center;
+
+            border: none;
+            border-radius: 10px;
+
+            outline: none;
+        }
